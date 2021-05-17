@@ -82,7 +82,7 @@
                                 <span class="user-name">@jiro・24日前</span>
                             </a>
                         </div>
-                        <p>プコワーキングスペースをオープンしました！</p>
+                        <p>コワーキングスペースをオープンしました！</p>
                         <img src="/TwitterClone/Views/img_uploaded/tweet/sample-post.jpg" alt="" class="post-image">
                         <div class="icon-list">
                             <div class="like">
