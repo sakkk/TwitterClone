@@ -1,34 +1,33 @@
+<?php
+
+include_once('../config.php');
+include_once('../util.php');
+
+$view_tweets = [
+    [
+        'user_id' => 1,
+        'user_name' => 'taro',
+        'user_nickname' => '太郎',
+        'user_image_name' => 'sample-person.jpg',
+        'tweet_body' => '今プログラミングをしています。',
+        'tweet_image_name' => null,
+        'tweet_created_at' => '2021-03-15 14:00:00',
+        'like_id' => null,
+        'like_count' => 0,
+    ],
+];
+
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/TwitterClone/Views/img/logo-twitterblue.svg">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="/TwitterClone/Views/css/style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous" defer></script>
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous" defer></script>
-    <script src="/TwitterClone/Views/js/like.js" defer></script>
+    <?php include_once('../Views/common/head.php'); ?>
     <title>プロフィール画面 / Twitterクローン</title>
     <meta name="description" content="プロフィール画面です">
 </head>
 <body class="home profile text-center">
     <div class="container">
-        <div class="side">
-            <div class="side-inner">
-                <ul class="nav flex-column">
-                    <li class="nav-item"><a href="home.php" class="nav-link"><img src="/TwitterClone/Views/img/logo-twitterblue.svg" alt="" class="icon"></a></li>
-                    <li class="nav-item"><a href="home.php" class="nav-link"><img src="/TwitterClone/Views/img/icon-home.svg" alt=""></a></li>
-                    <li class="nav-item"><a href="search.php" class="nav-link"><img src="/TwitterClone/Views/img/icon-search.svg" alt=""></a></li>
-                    <li class="nav-item"><a href="notification.php" class="nav-link"><img src="/TwitterClone/Views/img/icon-notification.svg" alt=""></a></li>
-                    <li class="nav-item"><a href="profile.php" class="nav-link"><img src="/TwitterClone/Views/img/icon-profile.svg" alt=""></a></li>
-                    <li class="nav-item"><a href="post.php" class="nav-link"><img src="/TwitterClone/Views/img/icon-post-tweet-twitterblue.svg" alt="" class="post-tweet"></a></li>
-                    <li class="nav-item my-icon"><img src="/TwitterClone/Views/img_uploaded/user/sample-person.jpg" alt="" class="js-popover" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="right" data-bs-content="<a href='profile.php'>プロフィール</a><br><a href='sign-out.php'>ログアウト</a>" data-bs-html="true"></li>
-                </ul>
-            </div>
-        </div>
+        <?php include_once('../Views/common/side.php'); ?>
         <div class="main">
             <div class="main-header">
                 <h1>太郎</h1>
@@ -87,17 +86,17 @@
                 </div>
             </div>
             <div class="ditch"></div>
-            
-            <!-- TODO：後日実施 -->
-
+            <?php if (empty($view_tweets)) : ?>
+                <p class="p-3">ツイートがまだありません</p>
+            <?php else : ?>
+                <div class="tweet-list">
+                    <?php foreach ($view_tweets as $view_tweet) : ?>
+                        <?php include('../Views/common/tweet.php'); ?>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            $('.js-popover').popover({
-                container: 'body'
-            })
-        }, false);
-    </script>
+    <?php include_once('../Views/common/foot.php'); ?>
 </body>
 </html>
