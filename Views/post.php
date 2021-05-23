@@ -9,7 +9,7 @@ include_once('../util.php');
 <head>
     <?php include_once('../Views/common/head.php'); ?>
     <title>つぶやく画面 / Twitterクローン</title>
-    <meta name="description" content="ホーム画面です">
+    <meta name="description" content="つぶやく画面です">
 </head>
 <body class="home">
     <div class="container">
