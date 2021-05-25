@@ -115,7 +115,7 @@ CREATE TABLE `users` (
   `name` varchar(50) NOT NULL,
   `email` varchar(254) NOT NULL,
   `password` varchar(128) NOT NULL,
-  `image_name` varchar(100) NOT NULL,
+  `image_name` varchar(100),
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
