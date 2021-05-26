@@ -48,3 +48,51 @@ function convertToDayTimeAgo(string $datetime) {
 
     return (int)$time . $unit;
 }
+
+/**
+ * Undocumented function
+ *
+ * @param array $user
+ * @return void
+ */
+function saveUserSession(array $user) {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    $_SESSION['USER'] = $user;
+}
+
+/**
+ * Undocumented function
+ *
+ * @return void
+ */
+function deleteUserSession() {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    unset($_SESSION['USER']);
+}
+
+/**
+ * Undocumented function
+ *
+ * @return array|false
+ */
+function getUserSession() {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (!isset($_SESSION['USER'])) {
+        return false;
+    }
+    $user = $_SESSION['USER'];
+
+    if(!isset($user['image_name'])) {
+        $user['image_name'] = null;
+    }
+    $user['image_path'] = buildImagePath($user['image_name'], 'user');
+
+    return $user;
+}
