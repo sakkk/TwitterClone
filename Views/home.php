@@ -18,7 +18,7 @@
                 </div>
                 <div class="input-area">
                     <form action="post.php" method="post" enctype="multipart/form-data">
-                        <textarea name="bady" placeholder="いまどうしてる？" maxlength="140"></textarea>
+                        <textarea name="body" placeholder="いまどうしてる？" maxlength="140"></textarea>
                         <div class="bottom-area">
                             <div class="mb-0">
                                 <input type="file" name="image" class="form-control form-control-sm">

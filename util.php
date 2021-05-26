@@ -96,3 +96,27 @@ function getUserSession() {
 
     return $user;
 }
+
+/**
+ * Undocumented function
+ *
+ * @param array $user
+ * @param array $file
+ * @param string $type
+ * @return string
+ */
+function uploadImage(array $user, array $file, string $type) {
+
+    $image_extension = strrchr($file['name'], '.');
+    $image_name = $user['id'] . '_' . date('YmdHis') . $image_extension;
+    $directory = '../Views/img_uploaded/' . $type . '/';
+    $image_path = $directory . $image_name;
+    move_uploaded_file($file['tmp_name'], $image_path);
+
+    if (exif_imagetype($image_path)) {
+        return $image_name;
+    }
+
+    echo '選択されたファイルは画像ではありません。';
+    exit;
+}

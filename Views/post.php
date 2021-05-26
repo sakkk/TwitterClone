@@ -1,9 +1,3 @@
-<?php
-
-include_once('../config.php');
-include_once('../util.php');
-
-?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -20,11 +14,11 @@ include_once('../util.php');
             </div>
             <div class="tweet-post">
                 <div class="my-icon">
-                    <img src="<?= HOME_URL; ?>Views/img_uploaded/user/sample-person.jpg" alt="">
+                    <img src="<?= htmlspecialchars($view_user['image_path']); ?>" alt="">
                 </div>
                 <div class="input-area">
                     <form action="post.php" method="post" enctype="multipart/form-data">
-                        <textarea name="bady" placeholder="いまどうしてる？" maxlength="140"></textarea>
+                        <textarea name="body" placeholder="いまどうしてる？" maxlength="140"></textarea>
                         <div class="bottom-area">
                             <div class="mb-0">
                                 <input type="file" name="image" class="form-control form-control-sm">
