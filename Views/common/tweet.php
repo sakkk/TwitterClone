@@ -16,7 +16,7 @@
         <img src="<?= buildImagePath($view_tweet['tweet_image_name'], 'tweet'); ?>" alt="" class="post-image">
     <?php endif; ?>
     <div class="icon-list">
-        <div class="like js-like" data-like-id=<?= $view_tweet['like_id']; ?>>
+        <div class="like js-like" data-tweet-id="<?= $view_tweet['tweet_id']; ?>" data-like-id=<?= $view_tweet['like_id']; ?>>
             <?php
             if (isset($view_tweet['like_id'])) {
                 echo '<img src="' . HOME_URL . 'Views/img/icon-heart-twitterblue.svg" alt="">';
