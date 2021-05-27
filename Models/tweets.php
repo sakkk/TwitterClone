@@ -30,3 +30,55 @@ function createTweet(array $data) {
 
     return $response;
 }
+
+/**
+ * Undocumented function
+ *
+ * @param array $user
+ * @return array|false
+ */
+function findTweets(array $user) {
+
+    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+    if ($mysqli->connect_errno) {
+        echo 'MySQLの接続に失敗しました：' . $mysqli->connect_error . "\n";
+        exit;
+    }
+
+    $login_user_id = $mysqli->real_escape_string($user['id']);
+
+    $query = <<<SQL
+        SELECT
+            T.id AS tweet_id,
+            T.status AS tweet_status,
+            T.body AS tweet_body,
+            T.image_name AS tweet_image_name,
+            T.created_at AS tweet_created_at,
+            U.id AS user_id,
+            U.name AS user_name,
+            U.nickname AS user_nickname,
+            U.image_name AS user_image_name,
+            L.id AS like_id,
+            (SELECT COUNT(*) FROM likes WHERE status = 'active' AND tweet_id = T.id) AS like_count
+        FROM
+            tweets AS T
+            JOIN
+            users AS U ON U.id = T.user_id AND U.status = 'active'
+            LEFT JOIN
+            likes AS L ON L.tweet_id = T.id AND L.status = 'active' AND L.user_id = '$login_user_id'
+        WHERE
+            T.status = 'active'
+    SQL;
+
+    if ($result = $mysqli->query($query)) {
+        $response = $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $response = false;
+        echo 'エラーメッセージ：' . $mysqli->error . '\n';
+    }
+
+    $mysqli->close();
+
+    return $response;
+}
