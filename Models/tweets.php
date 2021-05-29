@@ -36,9 +36,10 @@ function createTweet(array $data) {
  *
  * @param array $user
  * @param string $keyword
+ * @param array $user_ids
  * @return array|false
  */
-function findTweets(array $user, string $keyword = null) {
+function findTweets(array $user, string $keyword = null, array $user_ids = null) {
 
     $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
@@ -75,6 +76,14 @@ function findTweets(array $user, string $keyword = null) {
     if (isset($keyword)) {
         $keyword = $mysqli->real_escape_string($keyword);
         $query .= ' AND CONCAT(U.nickname, U.name, T.body) LIKE "%' . $keyword . '%"';
+    }
+
+    if (isset($user_ids)) {
+        foreach ($user_ids as $key => $user_id) {
+            $user_ids[$key] = $mysqli->real_escape_string($user_id);
+        }
+        $user_ids_csv = '"' . join('","', $user_ids) . '"';
+        $query .= ' AND T.user_id IN (' . $user_ids_csv . ')';
     }
 
     $query .= ' ORDER BY T.created_at DESC';
