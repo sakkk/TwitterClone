@@ -65,3 +65,44 @@ function deleteFollow(array $data) {
 
     return $response;
 }
+
+/**
+ * Undocumented function
+ *
+ * @param integer $user_id
+ * @return array|false
+ */
+function findFollowingUserIds(int $follow_user_id) {
+
+    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+    if ($mysqli->connect_errno) {
+        echo 'MySQLの接続に失敗しました：' . $mysqli->connect_error . "\n";
+        exit;
+    }
+
+    $query = <<<SQL
+        SELECT
+            followed_user_id
+        FROM
+            follows
+        WHERE
+            status = 'active' AND follow_user_id = '$follow_user_id'
+    SQL;
+
+    if ($result = $mysqli->query($query)) {
+        $response = $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $response = false;
+        echo 'エラーメッセージ：' . $mysqli->error . '\n';
+    }
+
+    $mysqli->close();
+
+    $following_user_ids = [];
+    foreach ($response as $follow) {
+        $following_user_ids[] = $follow['followed_user_id'];
+    }
+
+    return $following_user_ids;
+}
