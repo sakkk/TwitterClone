@@ -36,11 +36,17 @@ if (isset($_POST['nickname']) && isset($_POST['name']) && isset($_POST['email'])
 
 $requested_user_id = $user['id'];
 if (isset($_GET['user_id'])) {
-    $requested_user_id = $_GET['user_id'];
+    $requested_user_id = (int)$_GET['user_id'];
 }
 
 $view_user = $user;
 $view_requested_user = findUser($requested_user_id, $user['id']);
+
+if (!$view_requested_user) {
+    header('HTTP/1.0 404 Not Found');
+    exit;
+}
+
 $view_tweets = findTweets($user, null, [$requested_user_id]);
 
 include_once '../Views/profile.php';
