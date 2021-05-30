@@ -3,6 +3,7 @@ include_once '../config.php';
 include_once '../util.php';
 
 include_once '../Models/follows.php';
+include_once '../Models/notifications.php';
 
 $user = getUserSession();
 if (!$user) {
@@ -17,6 +18,13 @@ if (isset($_POST['followed_user_id'])) {
         'follow_user_id' => $user['id'],
     ];
     $follow_id = createFollow($data);
+
+    $data_notification = [
+        'received_user_id' => $_POST['followed_user_id'],
+        'sent_user_id' => $user['id'],
+        'message' => 'フォローされました。',
+    ];
+    createNotification($data_notification);
 }
 
 if (isset($_POST['follow_id'])) {

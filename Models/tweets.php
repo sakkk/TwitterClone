@@ -34,6 +34,41 @@ function createTweet(array $data) {
 /**
  * Undocumented function
  *
+ * @param integer $tweet_id
+ * @return array|false
+ */
+function findTweet(int $tweet_id) {
+
+    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+    if ($mysqli->connect_errno) {
+        echo 'MySQLの接続に失敗しました：' . $mysqli->connect_error . "\n";
+        exit;
+    }
+
+    $query = <<<SQL
+        SELECT
+            *
+        FROM
+            tweets AS T
+        WHERE
+            T.status = 'active' AND id = '$tweet_id'
+    SQL;
+
+    if ($result = $mysqli->query($query)) {
+        $response = $result->fetch_array(MYSQLI_ASSOC);
+    } else {
+        $response = false;
+        echo 'エラーメッセージ：' . $mysqli->error . '\n';
+    }
+
+    $mysqli->close();
+    return $response;
+}
+
+/**
+ * Undocumented function
+ *
  * @param array $user
  * @param string $keyword
  * @param array $user_ids
